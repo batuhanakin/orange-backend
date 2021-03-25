@@ -24,7 +24,7 @@ module.exports = ({ userService, authService }) => {
   });
 
   router.post(
-    "/",
+    "/signup",
     celebrate({ body: NEW_VALIDATION }, { abortEarly: false }),
     (req, res) => {
       const { fullName, email, password } = req.body;
