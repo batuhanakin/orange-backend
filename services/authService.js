@@ -8,8 +8,8 @@ module.exports = ({ userCollection, userService, sessionCollection }) => {
         return true;
       } else return false;
     },
-    async authenticateUser({ username, password }) {
-      const user = await userCollection.findOne({ username });
+    async authenticateUser({ email, password }) {
+      const user = await userCollection.findOne({ email });
       if (user) {
         const isPasswordMatch = await this.checkPassWord(user.hash, password);
         if (isPasswordMatch) {

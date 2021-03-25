@@ -9,10 +9,10 @@ const {
 module.exports = ({ userService, authService }) => {
   const router = require("express").Router();
   router.post("/login", (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     return authService
       .authenticateUser({
-        username,
+        email,
         password,
       })
       .then((result) => {
