@@ -1,13 +1,15 @@
 const crypto = require("crypto-js/");
 module.exports = ({ userCollection }) => {
   return {
-    async createUser({ username, password }) {
+    async createUser({ email, password, fullName }) {
       const hash = this.hashPassword(password);
       const user = await userCollection.insertOne({
-        username,
+        fullName,
+        email,
         hash,
       });
-      return user.result;
+      delete user.ops[0].hash;
+      return user.ops[0];
     },
     hashPassword(password) {
       const hash = crypto.MD5(password).toString();
