@@ -17,16 +17,15 @@ module.exports = ({ userCollection }) => {
     },
 
     async getUser({ userId }) {
-      console.log(userCollection);
       const foundUser = await userCollection.findOne({
         _id: userId,
       });
-      console.log(foundUser);
       if (foundUser) {
         const { hash, ...user } = foundUser || {};
         return user;
+      } else {
+        return "not found user";
       }
-      // return { username: "test" };
     },
   };
 };
