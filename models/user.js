@@ -17,6 +17,9 @@ const userSchema = {
       height: {
         bsonType: "string",
       },
+      age: {
+        bsonType: "int",
+      },
       firstWeight: {
         bsonType: "string",
       },

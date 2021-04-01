@@ -27,7 +27,7 @@ module.exports = ({ userService, authService }) => {
     "/signup",
     celebrate({ body: NEW_VALIDATION }, { abortEarly: false }),
     (req, res) => {
-      const { fullName, email, password, height, firstWeight } = req.body;
+      const { fullName, email, password, height, firstWeight, age } = req.body;
       return userService
         .createUser({
           fullName,
@@ -35,6 +35,7 @@ module.exports = ({ userService, authService }) => {
           password,
           height,
           firstWeight,
+          age,
         })
         .then((result) => {
           responseHandler.success(res, result);
