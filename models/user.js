@@ -14,6 +14,12 @@ const userSchema = {
       fullName: {
         bsonType: "string",
       },
+      height: {
+        bsonType: "string",
+      },
+      firstWeight: {
+        bsonType: "string",
+      },
       isDeleted: {
         bsonType: "bool",
       },
