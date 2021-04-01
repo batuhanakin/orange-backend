@@ -4,9 +4,11 @@ const JString = Joi.string();
 const MongoIdSchema = JString.regex(/^[0-9a-fA-F]{24}$/);
 
 const NEW_VALIDATION = Joi.object().keys({
-  email: Joi.string().email(),
-  fullName: Joi.string(),
-  password: Joi.string(),
+  email: Joi.string().email().required(),
+  fullName: Joi.string().required(),
+  password: Joi.string().required(),
+  height: Joi.number().required(),
+  firstWeight: Joi.number().required(),
 });
 
 const GET_VALIDATION = Joi.object().keys({
