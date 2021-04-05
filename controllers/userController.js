@@ -9,10 +9,10 @@ const {
 module.exports = ({ userService, authService }) => {
   const router = require("express").Router();
   router.post("/login", (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     return authService
       .authenticateUser({
-        username,
+        email,
         password,
       })
       .then((result) => {
@@ -20,19 +20,22 @@ module.exports = ({ userService, authService }) => {
           responseHandler.success(res, result);
         } else responseHandler.error(res, result, 401);
       })
-      .catch((err) => responseHandler.error(res, err, 401));
+      .catch((err) => responseHandler.error(res, err));
   });
 
   router.post(
-    "/",
+    "/signup",
     celebrate({ body: NEW_VALIDATION }, { abortEarly: false }),
     (req, res) => {
-      const { fullName, email, password } = req.body;
+      const { fullName, email, password, height, firstWeight, age } = req.body;
       return userService
         .createUser({
           fullName,
           email,
           password,
+          height,
+          firstWeight,
+          age,
         })
         .then((result) => {
           responseHandler.success(res, result);
