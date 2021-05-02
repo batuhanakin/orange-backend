@@ -23,42 +23,5 @@ module.exports = ({ userService, authService, doctorService }) => {
       .catch((err) => responseHandler.error(res, err));
   });
 
-  //   router.post(
-  //     "/signup",
-  //     celebrate({ body: NEW_VALIDATION }, { abortEarly: false }),
-  //     (req, res) => {
-  //       const { fullName, email, password, height, firstWeight, age } = req.body;
-  //       return userService
-  //         .createUser({
-  //           fullName,
-  //           email,
-  //           password,
-  //           height,
-  //           firstWeight,
-  //           age,
-  //         })
-  //         .then((result) => {
-  //           responseHandler.success(res, result);
-  //         })
-  //         .catch((err) => responseHandler.error(res, err, 200));
-  //     }
-  //   );
-
-  router.get(
-    "/:userId",
-    celebrate({ params: GET_VALIDATION }, { abortEarly: false }),
-    (req, res) => {
-      const { userId } = req.params;
-      return userService
-        .getUser({
-          userId: ObjectId(userId),
-        })
-        .then((result) => {
-          responseHandler.success(res, result);
-        })
-        .catch((err) => responseHandler.error(res, err, 200));
-    }
-  );
-
   return router;
 };
