@@ -43,6 +43,11 @@ module.exports = ({ userService, authService }) => {
         .catch((err) => responseHandler.error(res, err, 200));
     }
   );
+  router.get("/list", async (req, res) => {
+    const userList = await userService.getUserList();
+    console.log("adasdasdasd", userList);
+    return userList;
+  });
 
   router.get(
     "/:userId",

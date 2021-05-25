@@ -1,5 +1,5 @@
 const crypto = require("crypto-js/");
-module.exports = ({ userCollection }) => {
+module.exports = ({ userCollection, userService }) => {
   return {
     async createUser({ email, password, fullName, height, firstWeight, age }) {
       const hash = this.hashPassword(password);
@@ -18,6 +18,12 @@ module.exports = ({ userCollection }) => {
     hashPassword(password) {
       const hash = crypto.MD5(password).toString();
       return hash;
+    },
+    async getUserList() {
+      return userCollection.getUsers();
+    },
+    async getUserCount() {
+      return userCollection.count();
     },
 
     async getUser({ userId }) {
