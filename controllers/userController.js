@@ -27,7 +27,8 @@ module.exports = ({ userService, authService }) => {
     "/signup",
     celebrate({ body: NEW_VALIDATION }, { abortEarly: false }),
     (req, res) => {
-      const { fullName, email, password, height, firstWeight, age } = req.body;
+      const { fullName, email, password, height, firstWeight, age, phone } =
+        req.body;
       return userService
         .createUser({
           fullName,
@@ -36,6 +37,7 @@ module.exports = ({ userService, authService }) => {
           height,
           firstWeight,
           age,
+          phone,
         })
         .then((result) => {
           responseHandler.success(res, result);
@@ -43,6 +45,11 @@ module.exports = ({ userService, authService }) => {
         .catch((err) => responseHandler.error(res, err, 200));
     }
   );
+  router.get("/list", async (req, res) => {
+    const userList = await userService.getUserList();
+    console.log("adasdasdasd", userList);
+    return userList;
+  });
 
   router.get(
     "/:userId",

@@ -7,6 +7,7 @@ module.exports = (appContext) => {
     config: { PORT, accessControlAllowOrigin },
     userService,
     authService,
+    doctorService,
   } = appContext;
   const app = express();
 
@@ -19,6 +20,14 @@ module.exports = (appContext) => {
   app.use(
     "/api/user",
     require("../controllers/userController")({ userService, authService })
+  );
+  app.use(
+    "/api/doctor",
+    require("../controllers/doctorController")({
+      userService,
+      authService,
+      doctorService,
+    })
   );
 
   app.use((err, req, res, next) => {

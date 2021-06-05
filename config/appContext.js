@@ -1,6 +1,7 @@
 "use strict";
 const { MongoClient } = require("mongodb");
 const { userSchema } = require("../models/user");
+const { doctorSchema } = require("../models/doctor");
 const { sessionSchema } = require("../models/session");
 
 module.exports = async (config) => {
@@ -13,6 +14,9 @@ module.exports = async (config) => {
   const userCollection = await ensureCollection(mongoDb, "users", {
     validator: userSchema,
   });
+  const doctorCollection = await ensureCollection(mongoDb, "doctor", {
+    validator: doctorSchema,
+  });
   const sessionCollection = await ensureCollection(mongoDb, "sessions", {
     validator: sessionSchema,
   });
@@ -23,12 +27,20 @@ module.exports = async (config) => {
     userCollection,
     userService,
     sessionCollection,
+    doctorCollection,
+  });
+  const doctorService = require("../services/doctorService")({
+    userCollection,
+    doctorCollection,
+    userService,
+    authService,
   });
   return {
     config,
     mongoDbConnection,
     userService,
     authService,
+    doctorService,
   };
 };
 
