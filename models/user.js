@@ -23,6 +23,12 @@ const userSchema = {
       firstWeight: {
         bsonType: "string",
       },
+      kilos: {
+        bsonType: "array",
+      },
+      phone: {
+        bsonType: "string",
+      },
       isDeleted: {
         bsonType: "bool",
       },

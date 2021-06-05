@@ -9,6 +9,7 @@ const NEW_VALIDATION = Joi.object().keys({
   password: Joi.string().required(),
   height: Joi.number().required(),
   age: Joi.number().required(),
+  phone: Joi.number().required(),
   firstWeight: Joi.number().required(),
 });
 
