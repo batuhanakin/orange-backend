@@ -27,5 +27,40 @@ module.exports = ({
         return "not found user";
       }
     },
+    async getListOfApplicants(page, limit, search) {
+      console.log(search);
+      const searchObj = {};
+      if (search.fullName)
+        searchObj["fullName"] = new RegExp(search.fullName, "i");
+
+      const cursor = await userCollection.find({
+        // isDeleted: false,
+        ...searchObj,
+      });
+      const list = await cursor
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .toArray();
+      const total = await cursor.count();
+      return { list: list, total: total };
+    },
+    async getApplicant(objectId) {
+      const found = await userCollection.findOne({
+        _id: objectId,
+      });
+      return found;
+    },
+    async editApplicant(objectId, object) {
+      const applicant = await userCollection.findOneAndReplace(
+        { _id: objectId },
+        object
+      );
+      return applicant;
+    },
+    async deleteApplicant(objectId) {
+      const applicant = await userCollection.remove({ _id: objectId });
+
+      return applicant.result;
+    },
   };
 };
