@@ -3,11 +3,14 @@ const responseHandler = {
     console.log("error: ", error);
     const obj = {};
     if (status === 404) {
-      obj.message = "Sayfa bulunamadı.";
+      obj.message = (error && error.message) || "Sayfa bulunamadı.";
+      obj.status = (error && error.status) || "";
     } else if (status === 401) {
       obj.message = (error && error.message) || "Yetki yok!";
+      obj.status = (error && error.status) || "";
     } else {
       obj.message = (error && error.message) || "Hata!";
+      obj.status = (error && error.status) || "";
     }
     res.status(status).send(Object.assign(obj, { error: true }));
   },
