@@ -3,6 +3,7 @@ const { MongoClient } = require("mongodb");
 const { userSchema } = require("../models/user");
 const { doctorSchema } = require("../models/doctor");
 const { sessionSchema } = require("../models/session");
+const { foodSchema } = require("../models/foods");
 
 module.exports = async (config) => {
   const mongoDbConnection = await MongoClient.connect(
@@ -14,6 +15,9 @@ module.exports = async (config) => {
   const userCollection = await ensureCollection(mongoDb, "users", {
     validator: userSchema,
   });
+  const foodCollection = await ensureCollection(mongoDb, "foods", {
+    validator: foodSchema,
+  });
   const doctorCollection = await ensureCollection(mongoDb, "doctor", {
     validator: doctorSchema,
   });
@@ -22,6 +26,9 @@ module.exports = async (config) => {
   });
   const userService = require("../services/userService")({
     userCollection,
+  });
+  const foodService = require("../services/foodService")({
+    foodCollection,
   });
   const authService = require("../services/authService")({
     userCollection,
@@ -34,6 +41,7 @@ module.exports = async (config) => {
     doctorCollection,
     userService,
     authService,
+    foodCollection,
   });
   return {
     config,
@@ -41,6 +49,7 @@ module.exports = async (config) => {
     userService,
     authService,
     doctorService,
+    foodService,
   };
 };
 

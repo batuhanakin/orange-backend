@@ -8,6 +8,7 @@ module.exports = (appContext) => {
     userService,
     authService,
     doctorService,
+    foodService,
   } = appContext;
   const app = express();
 
@@ -27,6 +28,12 @@ module.exports = (appContext) => {
       userService,
       authService,
       doctorService,
+    })
+  );
+  app.use(
+    "/api/food",
+    require("../controllers/foodController")({
+      foodService,
     })
   );
 
