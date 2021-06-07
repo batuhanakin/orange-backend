@@ -44,11 +44,22 @@ module.exports = ({ userService, authService, doctorService }) => {
       responseHandler.error(res, error, 500);
     }
   });
+  router.get("/foods/:userId", async (req, res) => {
+    try {
+      console.log(req);
+      const { userId } = req.params;
+      console.log(req.query);
+
+      const result = await doctorService.getFoods(userId);
+      responseHandler.success(res, result, 200);
+    } catch (error) {
+      responseHandler.error(res, error, 500);
+    }
+  });
   router.get("/getApplicant/:applicantId", async (req, res) => {
     try {
       const { applicantId } = req.params;
       const result = await doctorService.getApplicant(ObjectId(applicantId));
-      console.log("123123", result);
       if (result) responseHandler.success(res, result);
       else responseHandler.error(res, { message: "Applicant not found" }, 204);
     } catch (error) {
@@ -58,7 +69,6 @@ module.exports = ({ userService, authService, doctorService }) => {
   router.put("/applicant", async (req, res) => {
     try {
       const { _id, ...data } = req.body || {};
-      console.log(req.body);
       const result = await doctorService.editApplicant(ObjectId(_id), data);
       responseHandler.success(res, result);
     } catch (error) {

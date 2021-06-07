@@ -4,6 +4,7 @@ module.exports = ({
   doctorCollection,
   authService,
   userService,
+  foodCollection,
 }) => {
   return {
     async createUser({ userName, password }) {
@@ -28,7 +29,6 @@ module.exports = ({
       }
     },
     async getListOfApplicants(page, limit, search) {
-      console.log(search);
       const searchObj = {};
       if (search.fullName)
         searchObj["fullName"] = new RegExp(search.fullName, "i");
@@ -43,6 +43,13 @@ module.exports = ({
         .toArray();
       const total = await cursor.count();
       return { list: list, total: total };
+    },
+    async getFoods(userId) {
+      const cursor = await foodCollection.find({
+        userId,
+      });
+      const list = await cursor.toArray();
+      return { foodList: list };
     },
     async getApplicant(objectId) {
       const found = await userCollection.findOne({
