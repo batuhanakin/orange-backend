@@ -45,9 +45,21 @@ module.exports = ({ userService, authService }) => {
         .catch((err) => responseHandler.error(res, err, 200));
     }
   );
+  router.post("/update", (req, res) => {
+    const { kilo, userId } = req.body;
+    console.log(req.body);
+    return userService
+      .updateUser({
+        userId: ObjectId(userId),
+        kilo,
+      })
+      .then((result) => {
+        responseHandler.success(res, result);
+      })
+      .catch((err) => responseHandler.error(res, err, 200));
+  });
   router.get("/list", async (req, res) => {
     const userList = await userService.getUserList();
-    console.log("adasdasdasd", userList);
     return userList;
   });
 
